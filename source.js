@@ -29,10 +29,16 @@ function submit() {
             }
         }
     }
-    canvas.width = maxX - minX + 10;
-    canvas.height = maxY - minY + 10;
-    var viewX = function (x) { return x - minX + 5; }
-    var viewY = function (y) { return y - minY + 5; }
+    canvas.style.width = window.innerWidth + 'px';
+    canvas.style.height = window.innerHeight + 'px';
+    canvas.width = window.innerWidth * window.devicePixelRatio - 1;
+    canvas.height = window.innerHeight * window.devicePixelRatio - 1;
+    var scale = Math.min(
+        (canvas.width - 10) / (maxX - minX),
+        (canvas.height - 10) / (maxY - minY)
+    );
+    var viewX = function (x) { return (x - minX) * scale + 5; }
+    var viewY = function (y) { return (y - minY) * scale + 5; }
     ctx.strokeStyle = 'rgb(0, 0, 0)';
     for (var i = 0; i < data.length; i++) {
         var x, y;
